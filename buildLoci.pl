@@ -58,11 +58,6 @@ Julien Lagarde, CRG, Barcelona, contact julienlag@gmail.com
 
 =cut
 
-#input is "bedtools intersect -s -wao -a test.gff -b test.gff"'s output.
-#test.gff must contain only GFF features used for locus definition (for example, exons).
-
-#if arg 2 ($ARGV[1]) is set to 1, a backup of each existing gene_id value in the input will be backup up as "gene_id_bkp" in the output
-
 my $keep_gene_id_backup='';
 GetOptions ('keepGeneid' => \$keep_gene_id_backup)
 or pod2usage( { -message => "Error in command line arguments",
@@ -105,15 +100,12 @@ while(<GFFINT>){
 }
 close GFFINT;
 print STDERR "Parsing input DONE.\n";
-#print STDERR Dumper \%transcript_to_transcripts;
 my %transcript_id_to_locus_id=();
 my $locusNumber=0;
 foreach my $tr1 (keys %transcript_to_transcripts){
-	#print STDERR "loc: $locusNumber\ntr1: $tr1\n";
 	searchOverlap($tr1);
 	$locusNumber++;
 }
-#print STDERR Dumper \%transcript_id_to_locus_id;
 foreach my $gffRecord ( keys %gffOut){
 	my @gffRecord=split("\t", $gffRecord);
 	$gffRecord[8]=~/transcript_id \"(\S+)\"/;
@@ -123,13 +115,11 @@ foreach my $gffRecord ( keys %gffOut){
 }
 sub searchOverlap{
 	my $tr1=$_[0];
-#	print STDERR "\tin FUN tr1 $tr1\n";
 	unless(exists $transcript_id_to_locus_id{$tr1}){
 		$transcript_id_to_locus_id{$tr1}=$locusNumber;
 	}
 	foreach my $tr2 (keys %{$transcript_to_transcripts{$tr1}})
 	{
-#		print STDERR "\tin FUN tr2 $tr2\n";
 		unless( exists $transcript_id_to_locus_id{$tr2}){
 			searchOverlap($tr2);
 		}
