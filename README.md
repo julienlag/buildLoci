@@ -22,13 +22,13 @@ The flexibility of `bedtools` allows the user to build gene loci based on whatev
 
 ## OUTPUT
 
-One GTF line per unique "left" GTF record in the input, with a supplementary `gene_id` attribute (in the form of `LOC_XXXXXXXXXX` appended to its 9th field.
+One GTF line per unique "left" GTF record in the input, with a supplementary `gene_id` attribute (in the form of `LOC_XXXXXXXXXX`) appended to its 9th field.
 
 Any gene\_id value present in the input will be overwritten, except if the `--keepGeneid` option is used.
 
 # DESCRIPTION
 
-Any pair of GTF records present within a line of input is assumed to be overlapping. Gene loci are then built based on these overlaps, i.e. the &lt;transcript\_id>s of both records are assigned the same arbitrary &lt;gene\_id> value in the output.
+Any pair of GTF records present within a line of input is assumed to represent overlapping features. Gene loci are then built based on these overlaps, i.e. the &lt;transcript\_id>s of both records are assigned the same arbitrary &lt;gene\_id> value in the output.
 
 # DEPENDENCIES
 

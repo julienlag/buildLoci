@@ -40,13 +40,13 @@ The flexibility of C<< bedtools >> allows the user to build gene loci based on w
 
 =head2 OUTPUT
 
-One GTF line per unique "left" GTF record in the input, with a supplementary C<< gene_id >> attribute (in the form of C<< LOC_XXXXXXXXXX >> appended to its 9th field.
+One GTF line per unique "left" GTF record in the input, with a supplementary C<< gene_id >> attribute (in the form of C<< LOC_XXXXXXXXXX >>) appended to its 9th field.
 
 Any gene_id value present in the input will be overwritten, except if the C<< --keepGeneid >> option is used.
 
 =head1 DESCRIPTION
 
-Any pair of GTF records present within a line of input is assumed to be overlapping. Gene loci are then built based on these overlaps, i.e. the <transcript_id>s of both records are assigned the same arbitrary <gene_id> value in the output.
+Any pair of GTF records present within a line of input is assumed to represent overlapping features. Gene loci are then built based on these overlaps, i.e. the <transcript_id>s of both records are assigned the same arbitrary <gene_id> value in the output.
 
 =head1 DEPENDENCIES
 
