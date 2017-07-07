@@ -19,6 +19,7 @@ The flexibility of `bedtools` allows the user to build gene loci based on whatev
 ## OPTIONS
 
 - **keepGeneid** = If set, any `gene_id` values present in the input will be kept in the output, under attribute `gene_id_bkp`.
+- **locPrefix** (string) = When set, this parameter's value will be prepended to all gene\_id values in the output (in the form of `<locPrefix>LOC_XXXXXXXXXX`)
 
 ## OUTPUT
 

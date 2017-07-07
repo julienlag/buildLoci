@@ -36,6 +36,9 @@ The flexibility of C<< bedtools >> allows the user to build gene loci based on w
 
 =item B<keepGeneid> = If set, any C<< gene_id >> values present in the input will be kept in the output, under attribute C<< gene_id_bkp >>.
 
+
+=item B<locPrefix> (string) = When set, this parameter's value will be prepended to all gene_id values in the output (in the form of C<< <locPrefix>LOC_XXXXXXXXXX >>)
+
 =back
 
 =head2 OUTPUT
@@ -59,7 +62,10 @@ Julien Lagarde, CRG, Barcelona, contact julienlag@gmail.com
 =cut
 
 my $keep_gene_id_backup='';
-GetOptions ('keepGeneid' => \$keep_gene_id_backup)
+my $locPrefix='';
+GetOptions ('keepGeneid' => \$keep_gene_id_backup,
+            'locPrefix=s' => \$locPrefix
+            )
 or pod2usage( { -message => "Error in command line arguments",
         		  -exitval => $exit_status  ,
             		-verbose => $verbose_level,
@@ -129,8 +135,12 @@ sub searchOverlap{
 sub makeLocusId{
 	my $id=$_[0];
 	my @newId=split("", $id);
-	my @prepend=('L','O','C','_');
-	for (my $i=4;$i<13-length($id); $i++){
+	#my @prefix=split("", $locPrefix);
+	my @prepend=(join("",split("", $locPrefix)),'L','O','C','_');
+	my $totalLength=($#prepend+13)-length($id);
+	#print STDERR "$#prepend $tmp\n";
+	for (my $i=$#prepend+1;$i<$totalLength; $i++){
+	#	print STDERR "\t$i\n";
 		$prepend[$i]=0;
 	}
 	unshift(@newId, @prepend);
